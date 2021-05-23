@@ -1,0 +1,2 @@
+rootProject.name = "vc.samyrarocha_app3"
+include ':app'

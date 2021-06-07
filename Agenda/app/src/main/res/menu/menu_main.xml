@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:contentScrim="@android:color/transparent"
+    tools:context=".MainActivity">
+
+    <!---Search-->
+    <item
+        android:id="@+id/searchButton"
+        android:icon="@drawable/button_search"
+        android:title="@string/Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always|collapseActionView"/>
+
+    <!---Sort menu item-->
+    <item
+        android:id="@+id/sortAction"
+        android:title="@string/Search"
+        android:icon="@drawable/ic_sort"
+        app:showAsAction="always"/>
+
+</menu>

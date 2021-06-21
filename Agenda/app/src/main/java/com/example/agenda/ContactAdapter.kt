@@ -42,6 +42,15 @@ class ContactAdapter :
         return lista.size
     }
 
+    var deletedContactItem: Contact? = null
+    var deletedContactPosition: Int? = null
+    fun deleteItem(position: Int) {
+        deletedContactItem = lista.get(position)
+        deletedContactPosition = position
+        lista.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var nome: TextView = itemView.findViewById(R.id.name)

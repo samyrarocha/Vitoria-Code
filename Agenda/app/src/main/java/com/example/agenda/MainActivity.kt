@@ -1,15 +1,21 @@
+
 package com.example.agenda
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.OnClickAction
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.SnackbarContentLayout
 import android.widget.SearchView as AndroidWidgetSearchView
 
 
@@ -39,9 +45,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
     }
 
-    private fun loadRecyclerViewItems(){
+    fun loadRecyclerViewItems() {
 
         //init recyclerView
         recyclerView = findViewById(R.id.recyclerView)
@@ -58,9 +65,22 @@ class MainActivity : AppCompatActivity() {
         //set adapter to recyclerView
         recyclerView.adapter = adapterItem
 
+        //Delete Item from Recycler View
+        var position: SwipeToDelete
+        val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapterItem))
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+        Snackbar.make(recyclerView, "Undo", Snackbar.LENGTH_LONG)
+            .setAction("Undo", View.OnClickListener() {
+                if (adapterItem.deletedContactPosition != null && adapterItem.deletedContactItem != null){
+                    listItem.add(adapterItem.deletedContactPosition!!,
+                        adapterItem.deletedContactItem!!)
+                    adapterItem.notifyItemInserted(adapterItem.deletedContactPosition!!)
+                }
+        }).show()
+
     }
 
-    //Call back from AddContact
+    //Callback from AddContact
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         when(it.resultCode){
             RESULT_OK -> {
